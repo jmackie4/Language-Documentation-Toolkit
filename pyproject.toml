@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools >= 80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["version","dependencies"]
+name = "Language-Documentation-Toolkit"
+authors = [
+    {name = 'Justin Mackie',email = "jmackie4@asu.edu"}
+]
+description = "LDTK is a python package that processes a corpus of texts and creates an annotated version!"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE*"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools_scm]
