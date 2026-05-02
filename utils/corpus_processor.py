@@ -1,9 +1,6 @@
-import os,spacy,itertools,nltk
+import os,spacy,itertools
 import pandas as pd
-import numpy as np
 from nltk.tokenize import RegexpTokenizer
-from sklearn.base import BaseEstimator
-from sklearn.feature_extraction.text import TfidfTransformer
 from pathlib import Path
 
 def stream_two(initial_dataframe):

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import compendium,gloss_stream,corpus_processor,stemmer_stream
+from utils import compendium, corpus_processor, gloss_stream, stemmer_stream
 
 
 def create_corpus():
