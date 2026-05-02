@@ -1,10 +1,6 @@
 import pandas as pd
 from collections import defaultdict,Counter
-import os,re,spacy,itertools,nltk
-from nltk.tokenize import RegexpTokenizer
-import numpy as np
-from sklearn.base import BaseEstimator
-from sklearn.feature_extraction.text import TfidfTransformer
+import os,re,itertools
 from pathlib import Path
 
 class WordCompendium:
@@ -27,7 +23,7 @@ class WordCompendium:
   def export_data(self):
     base_path = Path.home() / 'Desktop'
     export_folder_name = 'LDTK Created Resources'
-    export_folder_path = os.path.join(base_path, export_folder_name)
+    export_folder_path = os.path.join(str(base_path), export_folder_name)
     os.makedirs(export_folder_path, exist_ok=True)
 
     excel_file_path = os.path.join(export_folder_path, 'Corpus Resources.xlsx')
@@ -39,7 +35,6 @@ class WordCompendium:
       self.compendium.loc[:,'gloss_data'].to_excel(writer, sheet_name='Gloss Data', index=True)
 
     print(f"Exported data to {excel_file_path}")
-
 
   def get_concordances_for_words(self):
     if self.compendium is None:
@@ -100,6 +95,25 @@ class WordCompendium:
         else:
           print(f"\nNo gloss data found for '{word}'.")
       print("\n")
+
+  def use_stemmer(self):
+      if self.compendium is None:
+          print("Compendium is not filled. Please run fill_compendium() first.")
+          return
+
+      print("\nEnter words separated by commas to get their glosses (type 'exit' to stop):\n")
+      while True:
+          user_input = input("Words: ")
+          if user_input.lower() == 'exit' or not user_input.strip():
+              print("Exiting gloss search.")
+              break
+
+          input_words = [word.strip().lower() for word in user_input.split(',')]
+          stemmer_results = self.stemmer_model.process_sequence(*input_words)
+          for word,result in zip(input_words,stemmer_results):
+              print(f"\nStemmer results for '{word}':")
+              print(f"{result}")
+
 
 def create_vocabulary(tokenized_df: pd.DataFrame):
   source_lang_series = tokenized_df.iloc[:, 0]

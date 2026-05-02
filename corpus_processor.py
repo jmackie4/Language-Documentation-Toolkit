@@ -19,7 +19,7 @@ def stream_one(folder_name):
 
 
 def load_texts(folder_name):
-  my_drive_path = Path.home() / 'desktop'
+  my_drive_path = str(Path.home() / 'desktop')
   root_folder_path = my_drive_path + '/' + folder_name
   for filename in os.listdir(root_folder_path):
     with open(os.path.join(root_folder_path,filename),'r') as file:

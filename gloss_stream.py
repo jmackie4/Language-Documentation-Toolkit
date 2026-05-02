@@ -1,7 +1,6 @@
 import pandas as pd
-from collections import defaultdict,Counter
-import os,re,spacy,itertools,nltk
-from nltk.tokenize import RegexpTokenizer
+from collections import Counter
+import itertools
 import numpy as np
 from sklearn.base import BaseEstimator
 from sklearn.feature_extraction.text import TfidfTransformer

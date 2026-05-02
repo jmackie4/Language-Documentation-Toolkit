@@ -1,9 +1,4 @@
-import pandas as pd
-import os,spacy,nltk
-from nltk.tokenize import RegexpTokenizer
-import numpy as np
-from sklearn.base import BaseEstimator
-from sklearn.feature_extraction.text import TfidfTransformer
+import os
 from pathlib import Path
 import compendium,gloss_stream,corpus_processor,stemmer_stream
 
@@ -32,13 +27,13 @@ if __name__ == '__main__':
     compendium = create_compendium()
     options = {'get glosses': compendium.get_glosses_for_words,
                'get concordances': compendium.get_concordances_for_words,
-               'use stemmer': compendium.stemmer_model.process_sequence,
+               'use stemmer': compendium.use_stemmer,
                'export resources': compendium.export_data,
                }
     while True:
         for i,item in enumerate(options):
             print(f'{i}: {item}',end='\n')
-        users_choice = input('Please enter what you want to do: ')
+        users_choice = input('Please enter what you want to do by typing out the name of the option: ')
         if users_choice.lower() in options :
             options[users_choice.lower()]()
         elif users_choice.lower() == 'exit':
