@@ -57,6 +57,11 @@ Each of these options allows you to provide a list of queries you want to search
 
 **Each query for a one of LDTK's apps must be separated by a comma, that's important, don't forget it!**
 
+## **Exported Resources from LDTK!!**
+LDTK is able to actually make resources for you! Just note that LDTK will create a folder on your desktop titled 'LDTK Created Resources' that will store everything it creates.
+For now, LDTK creates one excel sheet that holds the tokenized version of your copus, the glossed version of your corpus, the vocabulary list and the gloss statistics of each vocabulary word!
+I'm working on making sure that the created resources are much easier to edit and change, so please be patient. And sorry for it being in an excel sheet for now.
+
 
 ## **Future Updates and Features To Be Added**
 Please note that LDTK is a one-person project. I'm unfortunately a busy person, so I can't add things in as quickly and continuously as I'd like to.
