@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from .utils import compendium, corpus_processor, gloss_stream, stemmer_stream
+from utils import compendium, corpus_processor, gloss_stream, stemmer_stream
 
 
 def create_corpus():
@@ -29,6 +29,7 @@ if __name__ == '__main__':
                'get concordances': compendium.get_concordances_for_words,
                'use stemmer': compendium.use_stemmer,
                'export resources': compendium.export_data,
+               'find subword sequence': compendium.find_subword_sequences,
                }
     while True:
         for i,item in enumerate(options):

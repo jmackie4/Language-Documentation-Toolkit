@@ -20,21 +20,6 @@ class WordCompendium:
                          'gloss_data':list(word_glosses.values())},
                         index=list(word_glosses.keys()))
 
-  def export_data(self):
-    base_path = Path.home() / 'Desktop'
-    export_folder_name = 'LDTK Created Resources'
-    export_folder_path = os.path.join(str(base_path), export_folder_name)
-    os.makedirs(export_folder_path, exist_ok=True)
-
-    excel_file_path = os.path.join(export_folder_path, 'Corpus Resources.xlsx')
-
-    with pd.ExcelWriter(excel_file_path) as writer:
-      self.tokenized_data.to_excel(writer, sheet_name='Tokenized Data', index=True)
-      self.glossed_data.to_frame(name='Glosses').to_excel(writer, sheet_name='Glossed Corpus', index=True)
-      pd.DataFrame(list(self.vocabulary), columns=['Vocabulary']).to_excel(writer, sheet_name='Vocabulary', index=False)
-      self.compendium.loc[:,'gloss_data'].to_excel(writer, sheet_name='Gloss Data', index=True)
-
-    print(f"Exported data to {excel_file_path}")
 
   def get_concordances_for_words(self):
     if self.compendium is None:
@@ -105,7 +90,7 @@ class WordCompendium:
       while True:
           user_input = input("Words: ")
           if user_input.lower() == 'exit' or not user_input.strip():
-              print("Exiting gloss search.")
+              print("Going back to the main menu!")
               break
 
           input_words = [word.strip().lower() for word in user_input.split(',')]
@@ -114,6 +99,42 @@ class WordCompendium:
               print(f"\nStemmer results for '{word}':")
               print(f"{result}")
 
+  def export_data(self):
+      base_path = Path.home() / 'Desktop'
+      export_folder_name = 'LDTK Created Resources'
+      export_folder_path = os.path.join(str(base_path), export_folder_name)
+      os.makedirs(export_folder_path, exist_ok=True)
+
+      excel_file_path = os.path.join(export_folder_path, 'Corpus Resources.xlsx')
+
+      with pd.ExcelWriter(excel_file_path) as writer:
+          self.tokenized_data.to_excel(writer, sheet_name='Tokenized Data', index=True)
+          self.glossed_data.to_frame(name='Glosses').to_excel(writer, sheet_name='Glossed Corpus', index=True)
+          pd.DataFrame(list(self.vocabulary), columns=['Vocabulary']).to_excel(writer, sheet_name='Vocabulary',
+                                                                               index=False)
+          self.compendium.loc[:, 'gloss_data'].to_excel(writer, sheet_name='Gloss Data', index=True)
+
+      print(f"Exported data to {excel_file_path}")
+
+  def find_subword_sequences(self):
+      if self.compendium is None:
+          print("Compendium is not filled. Please run fill_compendium() first.")
+          return
+
+      print("\nEnter the subword sequences you want to search for. Split all queries using a comma! (type 'exit' to stop).")
+      print('\nUse ^ before and $ after the sequence to filter by a word that starts with and ends with respectively:\n')
+      while True:
+          user_input = input("Sequences: ")
+          if user_input.lower() == 'exit' or not user_input.strip():
+              print("Going back to the main menu!")
+              break
+
+          input_sequences = [sequence.strip().lower() for sequence in user_input.split(',')]
+          sub_word_finder_results = {sequence:[word for word in self.vocabulary if re.search(sequence,word)]
+                                     for sequence in input_sequences}
+          for query,result in sub_word_finder_results.items():
+              print(f'\n Results for {query}:')
+              print(f"{result}")
 
 def create_vocabulary(tokenized_df: pd.DataFrame):
   source_lang_series = tokenized_df.iloc[:, 0]
